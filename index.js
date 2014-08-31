@@ -8,7 +8,7 @@ function isNested (file) {
 
 module.exports = function (app, location) {
     if (typeof app === 'string') {
-        throw new Error('Please pass in app as the first argument');
+        throw new Error('Please pass in a express app instance as the first argument');
     }
 
     location = path.resolve(location);

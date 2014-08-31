@@ -1,3 +1,6 @@
+var expect = require('chai').expect;
+var routeLoader = require('../');
+var expressApp = require('express')();
 var app = require('./fixtures');
 var request = require('supertest');
 
@@ -40,4 +43,15 @@ describe('Express Route Loader', function () {
             .end(done);
     });
 
+    it('should throw an error if the folder doesn\'t exist', function () {
+        expect(function () {
+            routeLoader(expressApp, 'idefdontexist');
+        }).to.throw(/Sorry, I'm not sure where that folder is.../);
+    });
+
+    it('should throw an error a string is passed as the first argument', function () {
+        expect(function () {
+            routeLoader('notanexpressapp');
+        }).to.throw(/Please pass in a express app instance as the first argument/);
+    });
 });
