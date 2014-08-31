@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/AlexMeah/express4-route-loader",
   "dependencies": {
+    "debug": "^1.0.4",
     "glob": "^4.0.5",
     "grunt": "^0.4.5"
   },

@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var glob = require('glob');
+var debug = require('debug')('routeLoader');
 
 function isNested (file) {
     return file.split(path.sep).length > 1;
@@ -26,8 +27,10 @@ module.exports = function (app, location) {
 
         files.forEach(function (file) {
             if (isNested(file)) {
+                debug('Mounting "' + path.join(location, file) + '" at ' + '"/' + path.dirname(file) + '"');
                 app.use('/' + path.dirname(file), require(path.join(location, file)));
             } else {
+                debug('Mounting "' + path.join(location, file) + '" at "/"');
                 app.use('/', require(path.join(location, file)));
             }
         });
