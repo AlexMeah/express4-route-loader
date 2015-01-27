@@ -3,7 +3,7 @@ var path = require('path');
 var glob = require('glob');
 var debug = require('debug')('routeLoader');
 
-function isNested (file) {
+function isNested(file) {
     return file.split(path.sep).length > 1;
 }
 
@@ -18,21 +18,19 @@ module.exports = function (app, location) {
         throw new Error('Sorry, I\'m not sure where that folder is...');
     }
 
-    glob(path.join('**/*.js'), {
+    var files = glob(path.join('**/*.js'), {
         cwd: location,
         dot: false,
         sync: true // Stop express race condition on start up
-    }, function (err, files) {
-        if (err) throw err;
+    });
 
-        files.forEach(function (file) {
-            if (isNested(file)) {
-                debug('Mounting "' + path.join(location, file) + '" at ' + '"/' + path.dirname(file) + '"');
-                app.use('/' + path.dirname(file), require(path.join(location, file)));
-            } else {
-                debug('Mounting "' + path.join(location, file) + '" at "/"');
-                app.use('/', require(path.join(location, file)));
-            }
-        });
+    files.forEach(function (file) {
+        if (isNested(file)) {
+            debug('Mounting "' + path.join(location, file) + '" at ' + '"/' + path.dirname(file) + '"');
+            app.use('/' + path.dirname(file), require(path.join(location, file)));
+        } else {
+            debug('Mounting "' + path.join(location, file) + '" at "/"');
+            app.use('/', require(path.join(location, file)));
+        }
     });
 };
