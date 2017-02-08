@@ -1,5 +1,7 @@
 # Express 4 Route Loader
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/AlexMeah/express4-route-loader.svg)](https://greenkeeper.io/)
+
 #### How to use 
 
 ```js
